@@ -1,15 +1,21 @@
 class TicTacToeGame
-
+  @game_over = false
+  
   def initialize
     puts "Welcome to Tic Tac Toe!"
     puts ""
+    puts @game_board
 
-    get_game_settings
+    set_game_settings
     puts "Great! Now everything is set up, lets start the game!"
     puts "-----------------------------------------------------"
+    
+    #create the gameboard and set them to E which refers to empty
+    @game_board = [["E", "E", "E"],["E", "E", "E"],["E", "E", "E"]]
+    game_over = true;
   end
   
-  def get_game_settings
+  def set_game_settings
   
     #Helpful instructions for first time user:
     puts "Here are your options:"
@@ -35,7 +41,7 @@ class TicTacToeGame
         puts "You selected an automated mode."
         break
       else
-        print "Please enter a valid game type (Press 1 for 1 Player, 2 for 2 Players, 3 for an automated game)"
+        print "Please enter a valid game type: "
       end
     end
     puts ""
@@ -60,8 +66,31 @@ class TicTacToeGame
 
     puts ""
   end
+  
+  def get_game_status
+    @game_over
+  end
+  
+  #print out the game board
+  def print_game_board 
+    @game_board.each do |cell|
+      cell.each { |c| print c + " " }
+      print "\n"
+    end
+  end
+
 
 end
 
+#create a new game class to start
 game = TicTacToeGame.new
+
+game.print_game_board()
+
+#loop through until the game over status is true
+until game.get_game_status() 
+  
+end
+
+puts "Game Over!"
 
