@@ -50,5 +50,8 @@ puts ""
 
 #Now that you have necessary settings from the user, you can start the game:
 
+puts "Lets start playing..."
+
+
 
 
