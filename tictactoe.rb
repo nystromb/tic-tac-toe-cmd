@@ -2,8 +2,7 @@ class TicTacToeGame
   @game_over = false
   
   def initialize
-    puts "Welcome to Tic Tac Toe!"
-    puts ""
+    puts "Welcome to Tic Tac Toe!\n"
     puts @game_board
 
     set_game_settings
@@ -12,18 +11,15 @@ class TicTacToeGame
     
     #create the gameboard and set them to E which refers to empty
     @game_board = [["E", "E", "E"],["E", "E", "E"],["E", "E", "E"]]
-    game_over = true;
+
   end
   
   def set_game_settings
-  
     #Helpful instructions for first time user:
     puts "Here are your options:"
     puts "Press 1 for 1 Player mode. "
     puts "Press 2 for 2 Player mode. "
-    puts "Press 3 for an automated game."
-
-    puts ""
+    puts "Press 3 for an automated game.\n\n"
 
     #Get user input for the game mode:
     print "What do you want your game mode to be? "
@@ -32,19 +28,18 @@ class TicTacToeGame
       @game_mode = Integer(gets.chomp)
   
       if @game_mode == 1
-        puts "You selected 1 Player mode."
+        puts "You selected 1 Player mode.\n\n"
         break
       elsif @game_mode == 2
-        puts "You selected 2 Player mode"
+        puts "You selected 2 Player mode.\n\n"
         break
       elsif @game_mode == 3
-        puts "You selected an automated mode."
+        puts "You selected an automated mode.\n\n"
         break
       else
         print "Please enter a valid game type: "
       end
     end
-    puts ""
 
 	# Helpful instructions for options
 	puts "Here are some more options:"
@@ -58,20 +53,16 @@ class TicTacToeGame
       unless (@starting_player == 1) || (@starting_player == 2)
         print "Invalid input, try again: "   
       else
-        puts ""
-        puts "The starting player is Player#@starting_player"
+        puts "The starting player is Player#@starting_player\n\n"
         break
       end
     end
-
-    puts ""
-  end
+end
   
   def get_game_status
     @game_over
   end
   
-  #print out the game board
   def print_game_board 
     @game_board.each do |cell|
       cell.each { |c| print c + " " }
@@ -85,6 +76,7 @@ end
 #create a new game class to start
 game = TicTacToeGame.new
 
+#print the intial game board out
 game.print_game_board()
 
 #loop through until the game over status is true
@@ -92,5 +84,6 @@ until game.get_game_status()
   
 end
 
+#once we broke through the previous loop, the game should be over.
 puts "Game Over!"
 
