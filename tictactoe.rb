@@ -7,10 +7,18 @@ class TicTacToeGame
     set_game_settings
     puts "Great! Now everything is set up, lets start the game!"
     puts "-----------------------------------------------------"
+    print_instructions()
     
-    #create the gameboard and set them to E which refers to empty
-    @game_board = [["E", "E", "E"],["E", "E", "E"],["E", "E", "E"]]
+    #create the gameboard and set them to the cell number
+    #to help the user know which cell location to choose
+    @game_board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+  end
+  
+  def print_instructions
+    # instructions to be printed before the game starts
+    puts "INSTRUCTIONS:"
+  
   end
   
   def set_game_settings
@@ -89,9 +97,11 @@ class TicTacToeGame
   end
   
   def print_game_board
+    puts "-----------------------------------------------------"
+    print "\n#{@current_player}'s turn...\n\n"
     @game_board.each do |cell|
-      cell.each { |c| print c + " " }
-      print "\n"
+      print String(cell) + " "
+      print "\n" if (cell == 3) || (cell == 6) || (cell == 9) 
     end
   end
   
@@ -100,27 +110,33 @@ class TicTacToeGame
       @current_player = @player_two
     else
       @current_player = @player_one
-    end 
+    end
   end
   
   def move_is_valid(input)
     result = false #assume false until proven otherwise
-    case input
-    when 1..9
-      #check to see if other player already took that spot
+    
+    #check to see if other player already took that spot
+    if @game_board[input-1] == input
+      result = true 
       puts "Thanks for your input!\n\n"
-      result = true
+    elsif input == 0
+      puts "Invalid input, try again"
+    else 
+      puts "Somebody took this position, try another spot"
     end
+    
     result
   end
   
   def get_move
     print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
     loop do
-      print ">"
+      print "> "
       user_move = Integer(gets.chomp)
       break if move_is_valid(user_move)
     end
+    #the move is valid now, so do something with the user input
   end
   
 end #end TicTacToeGame class
@@ -130,7 +146,6 @@ game = TicTacToeGame.new
 
 #loop through until the game over status is true
 until game.is_over()
-  #print the intial game board out
   game.print_game_board()
   game.get_move()
   game.change_turn()
