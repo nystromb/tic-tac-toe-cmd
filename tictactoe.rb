@@ -103,10 +103,24 @@ class TicTacToeGame
     end 
   end
   
+  def move_is_valid(input)
+    result = false #assume false until proven otherwise
+    case input
+    when 1..9
+      #check to see if other player already took that spot
+      puts "Thanks for your input!\n\n"
+      result = true
+    end
+    result
+  end
+  
   def get_move
-    print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)", "\n> "
-    move = Integer(gets.chomp)
-    #play move and change the turn
+    print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
+    loop do
+      print ">"
+      user_move = Integer(gets.chomp)
+      break if move_is_valid(user_move)
+    end
   end
   
 end #end TicTacToeGame class
@@ -114,15 +128,12 @@ end #end TicTacToeGame class
 #create a new game class to start
 game = TicTacToeGame.new
 
-#print the intial game board out
-game.print_game_board()
-
 #loop through until the game over status is true
-until game.is_over() 
+until game.is_over()
+  #print the intial game board out
+  game.print_game_board()
   game.get_move()
-  #get the move from the current players turn
-  
-  #play the move and change the turn and reprompt
+  game.change_turn()
 end
 
 #once we broke through the previous loop, the game should be over.
