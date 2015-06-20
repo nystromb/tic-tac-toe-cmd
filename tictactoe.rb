@@ -1,6 +1,5 @@
 class TicTacToeGame
   @game_over = false
-  
   def initialize
     puts "Welcome to Tic Tac Toe!\n"
     puts @game_board
@@ -57,21 +56,57 @@ class TicTacToeGame
         break
       end
     end
+    
+    set_players()
+  end
+  
+  def set_players
+	@player_one
+	@player_two
+	#set names for player one and player two
+    case @game_mode
+    when 1
+      @player_one = "Human"
+      @player_two = "Computer"
+    when 2
+      @player_one = "Player1"
+      @player_two = "Player2"
+    when 3
+      @player_one = "Computer1"
+      @player_two = "Computer2"
+    end
+    
+    #set the current players turn
+    if @starting_player == 1
+      @current_player = @player_one
+    else
+      @current_player = @player_two
+    end
   end
   
   def is_over
     @game_over
   end
   
-  def print_game_board 
+  def print_game_board
     @game_board.each do |cell|
       cell.each { |c| print c + " " }
       print "\n"
     end
   end
   
-  def get_user_move
-    current_move = Integer(gets.chomp)
+  def change_turn
+    if @current_player.downcase == @player_one.downcase
+      @current_player = @player_two
+    else
+      @current_player = @player_one
+    end 
+  end
+  
+  def get_move
+    print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)", "\n> "
+    move = Integer(gets.chomp)
+    #play move and change the turn
   end
   
 end #end TicTacToeGame class
@@ -84,7 +119,10 @@ game.print_game_board()
 
 #loop through until the game over status is true
 until game.is_over() 
+  game.get_move()
+  #get the move from the current players turn
   
+  #play the move and change the turn and reprompt
 end
 
 #once we broke through the previous loop, the game should be over.
