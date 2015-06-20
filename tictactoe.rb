@@ -57,9 +57,9 @@ class TicTacToeGame
         break
       end
     end
-end
+  end
   
-  def get_game_status
+  def is_over
     @game_over
   end
   
@@ -69,9 +69,12 @@ end
       print "\n"
     end
   end
-
-
-end
+  
+  def get_user_move
+    current_move = Integer(gets.chomp)
+  end
+  
+end #end TicTacToeGame class
 
 #create a new game class to start
 game = TicTacToeGame.new
@@ -80,7 +83,7 @@ game = TicTacToeGame.new
 game.print_game_board()
 
 #loop through until the game over status is true
-until game.get_game_status() 
+until game.is_over() 
   
 end
 
