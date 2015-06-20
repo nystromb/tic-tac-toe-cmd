@@ -1,10 +1,10 @@
 class TicTacToeGame
   @game_over = false
+  
   def initialize
     puts "Welcome to Tic Tac Toe!\n"
-    puts @game_board
 
-    set_game_settings
+    set_game_settings()
     puts "Great! Now everything is set up, lets start the game!"
     puts "-----------------------------------------------------"
     print_instructions()
@@ -12,6 +12,7 @@ class TicTacToeGame
     #create the gameboard and set them to the cell number
     #to help the user know which cell location to choose
     @game_board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    @game_moves = 0
 
   end
   
@@ -23,7 +24,7 @@ class TicTacToeGame
   
   def set_game_settings
     #Helpful instructions for first time user:
-    puts "Here are your options:"
+    puts "\nHere are your options:"
     puts "Press 1 for 1 Player mode. "
     puts "Press 2 for 2 Player mode. "
     puts "Press 3 for an automated game.\n\n"
@@ -93,15 +94,29 @@ class TicTacToeGame
   end
   
   def is_over
+    #game can be over if all spots are filled
+    if @game_moves == 9
+      @game_over = true
+    end
+    
+    #or if a player has a winning move (three x's or o's in a row)
+    
+    
     @game_over
   end
   
   def print_game_board
     puts "-----------------------------------------------------"
-    print "\n#{@current_player}'s turn...\n\n"
+    if @game_over != true
+      print "\n#{@current_player}'s turn...\n\n"
+    else
+      print "\nFINAL\n\n"
+    end
+    count = 1
     @game_board.each do |cell|
       print String(cell) + " "
-      print "\n" if (cell == 3) || (cell == 6) || (cell == 9) 
+      print "\n" if (count == 3) || (count == 6) || (count == 9) 
+      count += 1
     end
   end
   
@@ -119,7 +134,6 @@ class TicTacToeGame
     #check to see if other player already took that spot
     if @game_board[input-1] == input
       result = true 
-      puts "Thanks for your input!\n\n"
     elsif input == 0
       puts "Invalid input, try again"
     else 
@@ -130,13 +144,27 @@ class TicTacToeGame
   end
   
   def get_move
+    #print current game board for user
+    print_game_board()
+  
     print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
     loop do
       print "> "
-      user_move = Integer(gets.chomp)
-      break if move_is_valid(user_move)
+      @user_move = Integer(gets.chomp)
+      break if move_is_valid(@user_move)
     end
-    #the move is valid now, so do something with the user input
+    #the move is valid now, so put the move on the board
+    play_move(@user_move)
+  end
+  
+  def play_move(input)
+    if @current_player.downcase == @player_one.downcase
+      @game_board[input-1] = "X"
+    else
+      @game_board[input-1] = "O"
+    end
+    @game_moves += 1
+    change_turn()
   end
   
 end #end TicTacToeGame class
@@ -146,11 +174,12 @@ game = TicTacToeGame.new
 
 #loop through until the game over status is true
 until game.is_over()
-  game.print_game_board()
   game.get_move()
-  game.change_turn()
 end
 
+#print final game board
+game.print_game_board()
+
 #once we broke through the previous loop, the game should be over.
-puts "Game Over!"
+puts "\nGame Over!"
 
