@@ -122,7 +122,7 @@ class TicTacToeGame
       puts "\nGAME OVER!\n\n"
       #print final game board
       print_game_board()
-      puts "\n#@win_message\n\n"
+      puts "\n#@win_message"
     else # next players turn
       print "\n#{@current_player}'s turn...\n\n"
     end
