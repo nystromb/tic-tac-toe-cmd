@@ -3,14 +3,13 @@ class TicTacToeGame
     puts "Welcome to Tic Tac Toe!\n"
 
     set_game_settings()
-    print_instructions()
     
     #create the gameboard and set them to the cell number
     #to help the user know which cell location to choose
     @game_board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    @game_moves = 0
     @winning_lines =[[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
     @win_message
+    @game_moves = {:x_win_move => nil, :o_win_move => nil, :last_move => nil, :total_moves => 0}
   end
   
   def winning_move
@@ -27,11 +26,38 @@ class TicTacToeGame
     result
   end
   
-  def print_instructions
-    # instructions to be printed before the game starts
-    puts "INSTRUCTIONS:\n\n"
+  def check_next_to_win_move
+    winning_spot = nil
+    type = nil
     
-    puts "-----------------------------------------------------"
+    if (@game_board[@game_moves[:last_move]-1] == "X")
+      type = "X"
+    else
+      type = "O" 
+    end
+    #loop through winning line indexes
+    @winning_lines.each do |i|
+      #if the last game move is in the current winning lineup
+      if (@game_moves[:last_move] == i[0]) || (@game_moves[:last_move] == i[1]) || (@game_moves[:last_move] == i[2])
+        #check if there are two filled spots of the same type and the other is empty (XXE, EXX, XEX)
+        if ((@game_board[i[0]-1] == type) && (@game_board[i[1]-1] == type)) && ((@game_board[i[2]-1] != "X") && ((@game_board[i[2]-1] != "O")))
+          winning_spot = i[2]
+          break
+        elsif ((@game_board[i[1]-1] == type) && (@game_board[i[2]-1] == type)) && ((@game_board[i[0]-1] != "X") && ((@game_board[i[0]-1] != "O")))
+          winning_spot = i[0]
+          break
+        elsif ((@game_board[i[0]-1] == type) && (@game_board[i[2]-1] == type)) && ((@game_board[i[1]-1] != "X") && ((@game_board[i[1]-1] != "O")))
+          winning_spot = i[1]
+          break
+        end
+      end
+    end
+    
+    if type == "X"
+      @game_moves[:x_win_move] = winning_spot
+    else
+      @game_moves[:o_win_move] = winning_spot
+    end
   end
   
   def set_game_settings
@@ -113,7 +139,7 @@ class TicTacToeGame
     # game is over if there's a winning move or there have been 9 game moves
     if winning_move()
       game_over = true
-    elsif @game_moves == 9
+    elsif @game_moves[:total_moves] == 9
       game_over = true
       @win_message = "Draw game!"
     end
@@ -124,7 +150,7 @@ class TicTacToeGame
       print_game_board()
       puts "\n#@win_message\n\n"
     else # next players turn
-      print "\n#{@current_player}'s turn...\n\n"
+      print "\n#{@current_player}'s turn...moves:#{@game_moves[:total_moves]} last move: #{@game_moves[:last_move]} x_win_move: #{@game_moves[:x_win_move]} o_win_move: #{@game_moves[:o_win_move]}\n\n"
     end
     
     game_over
@@ -157,15 +183,76 @@ class TicTacToeGame
     result
   end
   
+  def move_is_valid(input)
+    result = false #assume false until proven otherwise
+    
+    #check to see if other player already took that spot
+    if (@game_board[input-1] == input)
+      result = true 
+    elsif (input < 1) || (input > 9)
+      puts "Invalid input, try again"
+    else
+      if !current_player_is_computer
+        puts "That spot is taken already. Try again"
+      end
+    end
+    result
+  end
+  
+  def computer_can_win
+    result = false
+    if (@current_player == @starting_player)
+      #check for x win move
+      if (@game_moves[:x_win_move] != nil)
+        result = true
+      end
+    else
+      #check for o win move
+      if (@game_moves[:o_win_move] != nil)
+        result = true
+      end
+    end
+    return result
+  end
+  
+  def other_can_win
+    result = false
+    if (@current_player == @starting_player)
+      #check for x win move
+      if (@game_moves[:o_win_move] != nil)
+        result = true
+      end
+    else
+      #check for o win move
+      if (@game_moves[:x_win_move] != nil)
+        result = true
+      end
+    end
+    return result
+  end
+  
   def make_computer_move
     @computer_move = 5
-    
+    if computer_can_win
+      #find out which space to go in
+      if(@current_player == @starting_player)
+        @computer_move = @game_moves[:x_win_move]
+      else
+        @computer_move = @game_moves[:o_win_move]
+      end
+    elsif other_can_win #stop them
+      if(@current_player == @starting_player)
+        @computer_move = @game_moves[:o_win_move]
+        @game_moves[:o_win_move] = nil
+      else
+        @computer_move = @game_moves[:x_win_move]
+        @game_moves[:x_win_move] = nil
+      end
+    end
     until move_is_valid(@computer_move)
-      #make strategic moves 
       @computer_move = Random.rand(1..9)
     end
-    
-    puts "Computer played #@computer_move"
+    puts "Computer: #@computer_move"
     play_move(@computer_move)
   end
   
@@ -175,39 +262,20 @@ class TicTacToeGame
     else
       print_game_board()
       print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
+      
       loop do
         print "> "
         @move = Integer(gets.chomp)
         break if move_is_valid(@move)
       end
+      
       play_move(@move)
     end
+    
+    if (@game_moves[:total_moves] > 2) 
+        check_next_to_win_move
+    end
     change_turn()
-  end
-  
-  def center_taken
-    result = false
-    if (@game_board[4] != "X") || (@game_board[4] != "O")
-      result = true
-    end
-    result
-  end
-
-  def move_is_valid(input)
-    result = false #assume false until proven otherwise
-    
-    #check to see if other player already took that spot
-    if @game_board[input-1] == input
-      result = true 
-    elsif (input < 1) || (input > 9)
-      puts "Invalid input, try again"
-    else
-      if !current_player_is_computer
-        puts "That spot is taken already. Try again"
-      end
-    end
-    
-    result
   end
   
   def play_move(input)
@@ -216,7 +284,9 @@ class TicTacToeGame
     else
       @game_board[input-1] = "O"
     end
-    @game_moves += 1
+    @game_moves[:total_moves] += 1
+    @game_moves[:last_move] = input
+
   end
   
 end #end TicTacToeGame class
