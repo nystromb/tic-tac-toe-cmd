@@ -12,6 +12,9 @@ class TicTacToeGame
     @game_moves = {:x_win_move => nil, :o_win_move => nil, :last_move => nil, :total_moves => 0}
   end
   
+  #method to check if there is a winning line combination (XXX or OOO)
+  #also sets the winning game message if player_one or player_two wins
+  #returns true or false if there is or is not
   def winning_move
     result = false
     @winning_lines.each do |lines|
@@ -26,6 +29,9 @@ class TicTacToeGame
     result
   end
   
+  #method to check if there is a move where there is only one move left to make a winning move
+  #sets x_win_move or o_win_move based on the last move (XXE, EXX, XEX)
+  #only called if moves are >
   def check_next_to_win_move
     winning_spot = nil
     type = nil
@@ -60,6 +66,7 @@ class TicTacToeGame
     end
   end
   
+  #prompts user for game settings before game starts
   def set_game_settings
     #Helpful instructions for first time user:
     puts "\nHere are your options:"
@@ -109,6 +116,7 @@ class TicTacToeGame
     puts "-----------------------------------------------------"
   end
   
+  #sets players names based on game mode selected (Human vs. Computer or Player1 vs. Player2 or Computer1 vs. Computer2)
   def set_players
 	@player_one
 	@player_two
@@ -133,6 +141,8 @@ class TicTacToeGame
     end
   end
   
+  #method returns true or false if game is over
+  #checked after every move
   def is_over    
     game_over = false
     
@@ -150,12 +160,13 @@ class TicTacToeGame
       print_game_board()
       puts "\n#@win_message\n\n"
     else # next players turn
-      print "\n#{@current_player}'s turn...moves:#{@game_moves[:total_moves]} last move: #{@game_moves[:last_move]} x_win_move: #{@game_moves[:x_win_move]} o_win_move: #{@game_moves[:o_win_move]}\n\n"
+      print "\n#{@current_player}'s turn...\n\n"
     end
     
     game_over
   end
 
+  #method prints out the current game board
   def print_game_board
     count = 1
     @game_board.each do |cell|
@@ -165,6 +176,7 @@ class TicTacToeGame
     end
   end
   
+  #changes the players turn after every move
   def change_turn
     if @current_player.downcase == @player_one.downcase
       @current_player = @player_two
@@ -175,6 +187,8 @@ class TicTacToeGame
     puts "-----------------------------------------------------"
   end
   
+  #method to check whether the current player is a computer or not
+  #returns true or false
   def current_player_is_computer
     result = false
     if (@current_player == "Computer") || (@current_player == "Computer1") || (@current_player == "Computer2")
@@ -183,6 +197,8 @@ class TicTacToeGame
     result
   end
   
+  #method to check if a given move is legal or illegal
+  #prompts user if there is a problem
   def move_is_valid(input)
     result = false #assume false until proven otherwise
     
@@ -199,6 +215,8 @@ class TicTacToeGame
     result
   end
   
+  #method to check if there is a winning move the computer can play
+  #returns true or false
   def computer_can_win
     result = false
     if (@current_player == @starting_player)
@@ -215,6 +233,7 @@ class TicTacToeGame
     return result
   end
   
+  #method to check if the other player has a winning move, used for the computer AI
   def other_can_win
     result = false
     if (@current_player == @starting_player)
@@ -231,6 +250,7 @@ class TicTacToeGame
     return result
   end
   
+  #method for computer AI to determine which move to play based on a simple strategy
   def make_computer_move
     @computer_move = 5
     if computer_can_win
@@ -256,6 +276,7 @@ class TicTacToeGame
     play_move(@computer_move)
   end
   
+  #main method to make a move, if the user is a human, then it will prompt the user for their move
   def make_move
     if current_player_is_computer
       make_computer_move()
@@ -278,6 +299,7 @@ class TicTacToeGame
     change_turn()
   end
   
+  #method to play a given move, and puts it on the game_board
   def play_move(input)
     if @current_player.downcase == @player_one.downcase
       @game_board[input-1] = "X"
