@@ -107,7 +107,7 @@ class TicTacToeGame
     end
   end
   
-  def is_over
+  def is_over    
     game_over = false
     
     # game is over if there's a winning move or there have been 9 game moves
@@ -149,18 +149,48 @@ class TicTacToeGame
     puts "-----------------------------------------------------"
   end
   
-  def get_move
-    #print current game board for user
-    print_game_board()
-  
-    print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
-    loop do
-      print "> "
-      @user_move = Integer(gets.chomp)
-      break if move_is_valid(@user_move)
+  def current_player_is_computer
+    result = false
+    if (@current_player == "Computer") || (@current_player == "Computer1") || (@current_player == "Computer2")
+      result = true
     end
-    #the move is valid now, so put the move on the board
-    play_move(@user_move)
+    result
+  end
+  
+  def make_computer_move
+    @computer_move = 5
+    
+    until move_is_valid(@computer_move)
+      #make strategic moves 
+      @computer_move = Random.rand(1..9)
+    end
+    
+    puts "Computer played #@computer_move"
+    play_move(@computer_move)
+  end
+  
+  def make_move
+    if current_player_is_computer
+      make_computer_move()
+    else
+      print_game_board()
+      print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
+      loop do
+        print "> "
+        @move = Integer(gets.chomp)
+        break if move_is_valid(@move)
+      end
+      play_move(@move)
+    end
+    change_turn()
+  end
+  
+  def center_taken
+    result = false
+    if (@game_board[4] != "X") || (@game_board[4] != "O")
+      result = true
+    end
+    result
   end
 
   def move_is_valid(input)
@@ -171,8 +201,10 @@ class TicTacToeGame
       result = true 
     elsif (input < 1) || (input > 9)
       puts "Invalid input, try again"
-    else 
-      puts "Somebody took this position, try another spot"
+    else
+      if !current_player_is_computer
+        puts "That spot is taken already. Try again"
+      end
     end
     
     result
@@ -185,7 +217,6 @@ class TicTacToeGame
       @game_board[input-1] = "O"
     end
     @game_moves += 1
-    change_turn()
   end
   
 end #end TicTacToeGame class
@@ -195,7 +226,7 @@ game = TicTacToeGame.new
 
 #loop through until the game over status is true
 until game.is_over()
-  game.get_move()
+  game.make_move()
 end
 
 

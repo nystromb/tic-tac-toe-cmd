@@ -26,6 +26,10 @@ class TicTacToeGame
     end
     result
   end
+
+  def check_mate
+  
+  end
   
   def print_instructions
     # instructions to be printed before the game starts
@@ -122,7 +126,7 @@ class TicTacToeGame
       puts "\nGAME OVER!\n\n"
       #print final game board
       print_game_board()
-      puts "\n#@win_message"
+      puts "\n#@win_message\n\n"
     else # next players turn
       print "\n#{@current_player}'s turn...\n\n"
     end
@@ -149,18 +153,39 @@ class TicTacToeGame
     puts "-----------------------------------------------------"
   end
   
+  def current_player_is_computer
+    result = false
+    if (@current_player == "Computer") || (@current_player == "Computer1") || (@current_player == "Computer2")
+      result = true
+    end
+    result
+  end
+  
+  def make_computer_move
+    if @game_moves == 0
+      #choose a random cell to make your move 
+      computer_move = Random.rand(1..9)
+    elsif ((@game_board[4] != "X") || (@game_board[4] != "O")) && (@game_moves > 0) #if center is open, take that position
+      computer_move = 5
+    else #check for winning locations of other player and choose those locations
+      
+    end
+  end
+  
   def get_move
     #print current game board for user
     print_game_board()
-  
-    print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
-    loop do
-      print "> "
-      @user_move = Integer(gets.chomp)
-      break if move_is_valid(@user_move)
+    if current_player_is_computer
+      make_computer_move()
+    else
+      print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
+      loop do
+        print "> "
+        @user_move = Integer(gets.chomp)
+        break if move_is_valid(@user_move)
+      end
+      play_move(@user_move)
     end
-    #the move is valid now, so put the move on the board
-    play_move(@user_move)
   end
 
   def move_is_valid(input)
