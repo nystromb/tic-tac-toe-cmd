@@ -12,3 +12,10 @@ This game also allows for the user to choose who gets to go first.
 Once you choose these settings when the program starts, the game will then begin.
 
 There are also helpful instructions along the way just in case you get lost.
+
+To start playing, just run the tictactoe.rb file as such:
+
+-> ruby tictactoe.rb
+
+Once the program runs, it will ask the user for the necessary input. After that is complete, the game will start.
+
