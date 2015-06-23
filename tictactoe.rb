@@ -272,7 +272,7 @@ class TicTacToeGame
     until move_is_valid(@computer_move)
       @computer_move = Random.rand(1..9)
     end
-    puts "Computer: #@computer_move"
+    puts "Computer chose #@computer_move"
     play_move(@computer_move)
   end
   
