@@ -5,7 +5,47 @@ class TicTacToeGame
     #create the gameboard and set them to the cell number
     #to help the user know which cell location to choose
     @win_message
-    @game_moves = {:x_win_move => nil, :o_win_move => nil, :last_move => nil, :total_moves => 0}
+    @game_moves = {:x_win_move => nil, :o_win_move => nil}
+    board = GameBoard.new
+  end
+    #method to check if there is a winning line combination (XXX or OOO)
+
+  #method to check if there is a move where there is only one move left to make a winning move
+  #sets x_win_move or o_win_move based on the last move (XXE, EXX, XEX)
+  #only called if moves are >
+  def check_next_to_win_move
+    winning_spot = nil
+    type = nil
+    
+    if (@game_board[@last_move - 1] == "X")
+      type = "X"
+    else
+      type = "O" 
+    end
+    
+    #loop through winning line indexes
+    @winning_lines.each do |i|
+      #if the last game move is in the current winning lineup
+      if (@last_move == i[0]) || (@last_move == i[1]) || (@last_move == i[2])
+        #check if there are two filled spots of the same type and the other is empty (XXE, EXX, XEX)
+        if ((@game_board[i[0]-1] == type) && (@game_board[i[1]-1] == type)) && ((@game_board[i[2]-1] != "X") && ((@game_board[i[2]-1] != "O")))
+          winning_spot = i[2]
+          break
+        elsif ((@game_board[i[1]-1] == type) && (@game_board[i[2]-1] == type)) && ((@game_board[i[0]-1] != "X") && ((@game_board[i[0]-1] != "O")))
+          winning_spot = i[0]
+          break
+        elsif ((@game_board[i[0]-1] == type) && (@game_board[i[2]-1] == type)) && ((@game_board[i[1]-1] != "X") && ((@game_board[i[1]-1] != "O")))
+          winning_spot = i[1]
+          break
+        end
+      end
+    end
+    
+    if type == "X"
+      @game_moves[:x_win_move] = winning_spot
+    else
+      @game_moves[:o_win_move] = winning_spot
+    end
   end
   
   #prompts user for game settings before game starts
