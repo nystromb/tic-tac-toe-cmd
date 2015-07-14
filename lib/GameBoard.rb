@@ -13,6 +13,12 @@ class GameBoard
     return @game_board[location-1]
   end
   
+  #check if the game location is empty
+  def is_empty?(location)
+    return true if @game_board[location-1].nil?
+    return false
+  end
+  
   #method prints out the current game board
   def to_s
     count = 1
