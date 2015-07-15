@@ -1,61 +1,49 @@
 class GameModel
   
   def initialize(mode, starting_player)
-    @board = GameBoard.new
+    @gb = GameBoard.new
     @total_moves = 0
 
     if (mode == 1)
-      puts "You selected 1 Player mode.\n\n"
+      puts "\nSelected Mode: 1 Player mode.\n"
       @player1 = Human.new
       @player2 = Computer.new
     elsif (mode == 2)
-      puts "You selected 2 Player mode.\n\n"
+      puts "\nSelected Mode: 2 Player mode.\n"
       @player1 = Human.new
       @player2 = Human.new
     elsif (mode == 3)
-      puts "You selected an automated mode.\n\n"
+      puts "\nSelected Mode: automated mode.\n"
       @player1 = Computer.new
       @player2 = Computer.new
     end
     
     if (starting_player == 1)
-      puts "The starting player is #{@player1.name}\n\n"
       @player1.started = true
+      @current_player = @player1
     else
       @player2.started = true
+      @current_player = @player2
     end
-    
+
     puts "\nGreat! Now everything is set up, lets start the game!"
-    puts "-----------------------------------------------------"
+    puts "-----------------------------------------------------\n\n"
+    puts "Player #{@current_player.name} starts...\n\n"
   end
 
   #main method to make a move, if the user is a human, then it will prompt the user for their move
   def make_move
-    if current_player_is_computer
-      make_computer_move()
-    else
-      print_game_board()
-      print "\n#@current_player, where would you like to make your move? (Choose 1 -> 9)\n"
-      
-      loop do
-        print "> "
-        @move = Integer(gets.chomp)
-        break if move_is_valid(@move)
-      end
-      
-      play_move(@move)
-    end
     
-    if (@game_moves[:total_moves] > 2) 
-        check_next_to_win_move
-    end
-    change_turn()
   end
   
-  #method to check if a given move is legal or illegal
-  def move_is_valid(input)
-    return true if @board.is_empty?(input)
+  #switches the players turn
+  def change_turns 
     
+  end
+  
+  #method to check if a given input move is legal or illegal
+  def move_is_valid(input)
+    return true if ((input >= 1) && (input <= 9)) && @gb.is_empty?(input)
     return false
   end
   
@@ -64,11 +52,12 @@ class GameModel
     result = false
     
     # game is over if there's a winning move or there have been 9 game moves
-    if winning_move
+    if gb.winning_move?
       result = true
+      # do something with win message
     elsif @total_moves == 9
       result = true
-      @win_message = "Draw game!"
+      # @win_message = "Draw game!"
     end
     
     return result
