@@ -29,7 +29,7 @@ class Prompt
   #prompts user for desired person to start
   def for_starting_player
     # Helpful instructions for options
-    puts "Here are some more options:"
+    puts "\nHere are some more options:"
     puts "Press 1 to have Player1 start."
     puts "Press 2 to have Player2 start.\n\n"
     
