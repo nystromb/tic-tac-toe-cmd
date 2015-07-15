@@ -1,28 +1,31 @@
 class GameModel
-  attr_accessor :total_moves
   
   def initialize(mode, starting_player)
     @board = GameBoard.new
     @total_moves = 0
 
-    if (mode = 1)
+    if (mode == 1)
+      puts "You selected 1 Player mode.\n\n"
       @player1 = Human.new
       @player2 = Computer.new
-    elsif (mode = 2)
+    elsif (mode == 2)
+      puts "You selected 2 Player mode.\n\n"
       @player1 = Human.new
       @player2 = Human.new
-    elsif (mode = 3)
+    elsif (mode == 3)
+      puts "You selected an automated mode.\n\n"
       @player1 = Computer.new
       @player2 = Computer.new
     end
     
     if (starting_player == 1)
+      puts "The starting player is #{@player1.name}\n\n"
       @player1.started = true
     else
       @player2.started = true
     end
     
-    puts "Great! Now everything is set up, lets start the game!"
+    puts "\nGreat! Now everything is set up, lets start the game!"
     puts "-----------------------------------------------------"
   end
 
