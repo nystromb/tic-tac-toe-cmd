@@ -11,7 +11,7 @@ class GameInit
     @ready = false
   end
   
-  def players(mode, start)
+  def players(mode)
     if (mode == 1)
       @mode = "Human v. Computer"
       @player1 = Human.new
@@ -25,11 +25,15 @@ class GameInit
       @player1 = Computer.new
       @player2 = Computer.new
     end
-    
-    if (start == 1)
+  end
+  
+  def set_starting(player)
+    if (player == 1)
       @player1.starts = true
+      @player1.peice = "X"
     else
       @player2.starts = true
+      @player2.peice = "O"
     end
   end
   
