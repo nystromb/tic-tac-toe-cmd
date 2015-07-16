@@ -1,57 +1,52 @@
 class GameInit
   attr_accessor :ready
-  attr_accessor :player1
-  attr_accessor :player2
-  attr_accessor :mode
+  attr_accessor :first_player
+  attr_accessor :game_mode
+  attr_accessor :mode_to_s
   
-  def initialize(prompt)
-    @prompt = prompt
-    @player1 = nil
-    @player2 = nil
+  def initialize(mode = 2, first_player = 1)
     @ready = false
+    @game_mode = mode
+    @first_player = first_player
   end
   
-  def players(mode)
-    if (mode == 1)
-      @mode = "Human v. Computer"
+  def players
+    if (@game_mode == 1)
+      @mode_to_s = "Human v. Computer"
       @player1 = Human.new
       @player2 = Computer.new
-    elsif (mode == 2)
-      @mode = "Human v. Human"
+    elsif (@game_mode == 2)
+      @mode_to_s = "Human v. Human"
       @player1 = Human.new
       @player2 = Human.new
-    elsif (mode == 3)
-      @mode = "Computer v. Computer"
+    elsif (@game_mode == 3)
+      @mode_to_s = "Computer v. Computer"
       @player1 = Computer.new
       @player2 = Computer.new
     end
-  end
-  
-  def set_starting(player)
-    if (player == 1)
+    
+    if (@first_player == 1)
       @player1.starts = true
       @player1.peice = "X"
+      @player2.peice = "O"
     else
       @player2.starts = true
       @player2.peice = "O"
+      @player1.peice = "X"
     end
-  end
-  
-  def cmd_line_args(mode, fp)
-    (((fp.to_i == 1) || (fp.to_i == 2)) && mode_valid(mode.to_i)) ? result = true : result = false
-    return result
+    
+    return @player1, @player2
   end
 
-  def mode_valid(m)
-    case m
-    when 1
-      return true
-    when 2
-      return true  
-    when 3
-      return true
-    else
-      return false
+  def check_args(mode, first_player)
+    if (first_player.to_i == 1) || (first_player.to_i == 2)
+      @first_player = first_player
+      case (mode.to_i)
+      when 1..3
+        return true
+      else
+        return false
+      end
     end
   end
 
