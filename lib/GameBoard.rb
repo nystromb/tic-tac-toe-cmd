@@ -1,4 +1,5 @@
 class GameBoard
+  
   def initialize
     @board = {1 => nil,2 => nil,3 => nil,4 => nil,5 => nil,6 => nil,7 => nil,8 => nil,9 => nil}
     @win_combination = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
@@ -39,10 +40,11 @@ class GameBoard
       if value.nil?
         print " #{index} "
       else
-        print "#{value} "
+        print " #{value} "
       end
       print "\n" if (index % 3) == 0 
     end
+    print "\n"
   end
   
 end
