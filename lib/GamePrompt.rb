@@ -48,5 +48,15 @@ class Prompt
     return start
   end
   
+  def intro(name, mode = nil)
+    puts "\nGreat! Everything is now set up, lets start the game!"
+    puts "-----------------------------------------------------"
+    puts "-------------- Welcome to Tic Tac Toe ---------------"
+    puts "-----------------------------------------------------"
+    puts "Game Mode: #{mode}\n\n"
+    puts "-----------------------------------------------------\n\n"
+    puts "Player #{name} starts...\n\n"
+  end
+  
   
 end
