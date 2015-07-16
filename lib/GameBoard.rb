@@ -6,17 +6,17 @@ class GameBoard
   
   #method to play a given move, and puts it on the game_board
   def play_move(index, piece)
-    @board[index-1] = piece
+    @board[index] = piece
   end
   
   #get the piece at the specified game board location
   def get_piece_at(index)
-    return @board[index-1]
+    return @board[index]
   end
   
   #check if the game location is empty
   def is_empty?(index)
-    return true if (index > 0 && index <= 9) && (@board[index-1].nil?)
+    return true if (index > 0 && index <= 9) && (@board[index].nil?)
     return false
   end
   
@@ -25,12 +25,12 @@ class GameBoard
     @win_combination.each do |index|
       #check game board to see if XXX or OOO combination exists
       if (@board[index[0]] == "X") && (@board[index[1]] == "X") && (@board[index[2]] == "X")
-        return "X"
+        return true
       elsif (@board[index[0]] == "O") && (@board[index[1]] == "O") && (@board[index[2]] == "O")
-        return "O"
+        return true
       end
     end
-    return nil
+    return false
   end
   
   #method prints out the current game board
