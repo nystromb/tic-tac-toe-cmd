@@ -36,6 +36,7 @@ class GameBoard
   
   #method prints out the current game board
   def to_s
+    print "\n"
     @board.each do |index, value|
       if value.nil?
         print " #{index} "

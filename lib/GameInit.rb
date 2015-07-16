@@ -2,7 +2,7 @@ class GameInit
   attr_accessor :ready
   attr_accessor :first_player
   attr_accessor :game_mode
-  attr_accessor :mode_to_s
+  attr_accessor :mode
   
   def initialize(mode = 2, first_player = 1)
     @ready = false
@@ -12,15 +12,15 @@ class GameInit
   
   def players
     if (@game_mode == 1)
-      @mode_to_s = "Human v. Computer"
+      @mode = "Human v. Computer"
       @player1 = Human.new
       @player2 = Computer.new
     elsif (@game_mode == 2)
-      @mode_to_s = "Human v. Human"
+      @mode = "Human v. Human"
       @player1 = Human.new
       @player2 = Human.new
     elsif (@game_mode == 3)
-      @mode_to_s = "Computer v. Computer"
+      @mode = "Computer v. Computer"
       @player1 = Computer.new
       @player2 = Computer.new
     end
