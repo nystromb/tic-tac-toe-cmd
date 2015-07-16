@@ -6,25 +6,19 @@ require "./lib/GameInit.rb"
 
 def start(prompt, game)
   prompt.intro(game.current_player.name, game.mode)
-  
-  until game.is_over
-    game.board_print
-    
-    if game.current_player.is_human?
-      move = prompt.user_move(game.current_player)
-      until game.move_is_valid(move)
-        print "> "
-        move = gets.chomp
-      end
-    else #computer must make a move
-      
-    end
 
+  until game.is_over
+    move = nil
+    game.board_print
+    loop do
+      (game.current_player.is_human?) ? (move = prompt.user_move(game.current_player)) : (move = game.generate_move)
+      break if game.move_is_valid(move)
+    end
     game.play(move)
   end
-  
-  #game is now over, print final board
+  #game is now over, print final board 
   game.board_print
+  (game.last_move == nil) ? (prompt.game_over_msg) : (prompt.game_over_msg(game.last_move))
 end
 
 if __FILE__ == $0
