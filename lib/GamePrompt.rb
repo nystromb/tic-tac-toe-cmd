@@ -59,9 +59,18 @@ class Prompt
   end
   
   def user_move(player)
-    (player.starts) ? (print "Player 1: ") : (print "Player 2: ")
-    print "#{player.name}, where would you like to make your move? "
+    (player.starts) ? (print "Player 1 (#{player.peice}): ") : (print "Player 2 (#{player.peice}): ")
+    print "where would you like to make your move? "
     move = gets.chomp
     return move
+  end
+  
+  def game_over_msg(winner = nil)
+    puts "\nGame Over!\n\n"
+    if winner.nil?
+      puts "Draw Game!"
+    else
+      (winner.starts) ? (puts "Player 1 (#{winner.peice}) wins!\n\n") : (puts "Player 2 (#{winner.peice}) wins!\n\n")
+    end
   end
 end
