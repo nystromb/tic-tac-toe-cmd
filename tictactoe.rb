@@ -5,9 +5,9 @@ require "./lib/GamePrompt.rb"
 require "./lib/GameInit.rb"
 
 def start(game)
-  #until game.is_over
-    #game.make_move
-  #end
+  until game.is_over
+    game.make_move
+  end
 end
 
 if __FILE__ == $0
@@ -28,8 +28,9 @@ if __FILE__ == $0
   unless init.ready
     puts "USAGE MESSAGE"
   else
-    init.players(mode, fp)
-    start(GameModel.new(prompt, init))
+    init.players(mode)
+    init.set_starting(fp)
+    start(GameModel.new(prompt, init.player1, init.player2, init.mode))
   end
   
 end

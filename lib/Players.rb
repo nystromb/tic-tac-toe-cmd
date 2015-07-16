@@ -1,7 +1,7 @@
 class Human
   attr_accessor :name
   attr_accessor :starts
-  attr_accessor :game_peice
+  attr_accessor :peice
   
   def initialize (name = "Human")
     @starts = false
