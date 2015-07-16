@@ -1,17 +1,26 @@
 class Human
   attr_accessor :name
-  attr_accessor :started
+  attr_accessor :starts
   attr_accessor :game_peice
   
   def initialize (name = "Human")
-    @started = false
+    @starts = false
     @name = name
+  end
+
+  def is_human?
+    return true
   end
 end
 
 class Computer < Human
   def initialize(name = "Computer")
     @name = name
-    @started = false
+    @starts = false
   end
+  
+  def is_human? 
+    return false
+  end
+  
 end
