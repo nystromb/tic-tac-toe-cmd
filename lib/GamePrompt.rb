@@ -48,7 +48,7 @@ class Prompt
     return start
   end
   
-  def intro(name, mode = nil)
+  def intro(name, mode)
     puts "\nGreat! Everything is now set up, lets start the game!"
     puts "-----------------------------------------------------"
     puts "-------------- Welcome to Tic Tac Toe ---------------"
@@ -58,5 +58,9 @@ class Prompt
     puts "Player #{name} starts...\n\n"
   end
   
-  
+  def user_move(name)
+    print "\n#{name}, where would you like to make your move? "
+    move = gets.chomp
+    return move
+  end
 end
