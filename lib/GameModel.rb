@@ -4,8 +4,12 @@ class GameModel
   attr_reader :winner
   attr_reader :mode
 
-  def initialize
-    @board = {1 => nil, 2 => nil, 3 => nil, 4 => nil, 5 => nil, 6 => nil, 7 => nil, 8 => nil, 9 => nil}
+  def initialize(board = nil)
+    unless board.nil?
+      @board = board
+    else
+      @board = {1 => nil, 2 => nil, 3 => nil, 4 => nil, 5 => nil, 6 => nil, 7 => nil, 8 => nil, 9 => nil}
+    end
     @winner
   end
   
@@ -15,9 +19,8 @@ class GameModel
     return false
   end
   
-  def play(move, peice = @current_player.peice)
+  def play(move, peice)
     @board[move] = peice
-    change_turns
   end
   
   def get_opponent(player)
@@ -35,7 +38,7 @@ class GameModel
   
   #method to check if a given input move is legal or illegal
   def move_is_valid(index)
-    return true if (index > 0 && index < 10) && (@board[index].nil?)
+    return true if ((index >= 1) && (index <= 9)) && (@board[index].nil?)
     return false 
   end
   
@@ -47,10 +50,6 @@ class GameModel
       print "\n" if (index % 3) == 0 
     end
     print "\n"
-  end
-  
-  def change_turns
-    (@current_player == @p1) ? @current_player = @p2 : @current_player = @p1
   end
 
   #checks game board for a winning combination exists
@@ -95,40 +94,4 @@ class GameModel
     return count
   end
   
-  def init_players(mode, sp)
-    case mode
-    when 1
-      @mode = "Human v. Computer"
-      @p1 = Player.new
-      @p2 = Computer.new
-    when 2
-      @mode = "Human v. Human"
-      @p1 = Player.new
-      @p2 = Player.new
-    when 3
-      @mode = "Computer v. Computer"
-      @p1 = Computer.new
-      @p2 = Computer.new
-    end
-
-    if (sp == 1)
-      @p1.starts = true
-      @p1.peice = "X"
-      @p2.peice = "O"
-    else
-      @p2.starts = true
-      @p2.peice = "X"
-      @p1.peice = "O"
-    end
-    
-    (@p1.starts) ? @current_player = @p1 : @current_player = @p2
-    
-  end
-  
-end
-
-class GameState < GameModel
-  def initialize(board)
-    @board = board
-  end
 end
