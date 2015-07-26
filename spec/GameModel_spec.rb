@@ -15,9 +15,6 @@ RSpec.describe GameModel do
       #less than 1 shouldn't work either
       9.times { |i| expect(model.move_is_valid(i-8)).to eq(false)}
     end
-    it 'can accept a nil value' do
-      expect(GameModel.new.move_is_valid(nil)).to eq(false)
-    end
   end
   describe '# winning_move?:' do
     it 'should have no winning move upon initialization' do
@@ -44,9 +41,9 @@ RSpec.describe GameModel do
       
       expect(model.get_empty_locs).to eq([1,2,3,4,5,6,7,8,9])
       
-      model.play(5)
-      model.play(9)
-      model.play(1)
+      model.play(5, "X")
+      model.play(9, "O")
+      model.play(1, "X")
       
       expect(model.get_empty_locs).to eq([2,3,4,6,7,8])
     end
@@ -54,38 +51,38 @@ RSpec.describe GameModel do
   
   describe '#next_win? :' do
     it 'XXE' do
-      board = GameBoard.new
+      model = GameModel.new
       combo = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
       
-      expect(board.next_win?(combo, 1, "X")).to eq(false)
+      expect(model.next_win?(combo, 1, "X")).to eq(false)
       
-      board.place(1, "X")
-      board.place(5, "X")
+      model.play(1, "X")
+      model.play(5, "X")
       
-      expect(board.next_win?(combo ,9 , "X")).to eq(true)
+      expect(model.next_win?(combo ,9 , "X")).to eq(true)
       
-      board.place(1, "O")
-      board.place(5, "O")
+      model.play(1, "O")
+      model.play(5, "O")
       
-      expect(board.next_win?(combo ,9 , "O")).to eq(true)
+      expect(model.next_win?(combo ,9 , "O")).to eq(true)
     end
     it 'XEX' do
-      board = GameBoard.new
+      model = GameModel.new
       combo = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
       
-      board.place(1, "O")
-      board.place(3, "O")
+      model.play(1, "O")
+      model.play(3, "O")
       
-      expect(board.next_win?(combo, 1, "O")).to eq(true)
+      expect(model.next_win?(combo, 1, "O")).to eq(true)
     end
     it 'EXX' do
-      board = GameBoard.new
+      model = GameModel.new
       combo = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
       
-      board.place(8, "X")
-      board.place(9, "X")
+      model.play(8, "X")
+      modek.play(9, "X")
       
-      expect(board.next_win?(combo, 7, "X")).to eq(true)
+      expect(model.next_win?(combo, 7, "X")).to eq(true)
     end
   end
 end
