@@ -48,21 +48,25 @@ class Prompt
     return start
   end
   
-  def intro(name, mode)
+  def intro(player, mode)
     puts "\nGreat! Everything is now set up, lets start the game!\n\n"
     puts "-----------------------------------------------------"
     puts "-------------- Welcome to Tic Tac Toe ---------------"
     puts "-----------------------------------------------------"
     puts "Game Mode: #{mode}\n\n"
     puts "-----------------------------------------------------\n\n"
-    puts "Player #{name} starts...\n\n"
+    (player.starts) ? (print "Player 1 (#{player.peice}) starts... \n") : (print "Player 2 (#{player.peice}) starts... \n")
   end
   
   def user_move(player)
-    (player.starts) ? (print "Player 1 (#{player.peice}): ") : (print "Player 2 (#{player.peice}): ")
+    (player.starts) ? (print "#{player.name} 1 (#{player.peice}): ") : (print "#{player.name} 2 (#{player.peice}): ")
     print "where would you like to make your move? "
-    move = gets.chomp
+    move = STDIN.gets.chomp
     return move
+  end
+  
+  def computer_move
+    puts "Computer's turn..."
   end
   
   def game_over_msg(winner = nil)
@@ -70,7 +74,11 @@ class Prompt
     if winner.nil?
       puts "Draw Game!"
     else
-      (winner.starts) ? (puts "Player 1 (#{winner.peice}) wins!\n\n") : (puts "Player 2 (#{winner.peice}) wins!\n\n")
+      (winner.starts) ? (puts "#{winner} wins!\n\n") : (puts "#{winner} wins!\n\n")
     end
+  end
+  
+  def usage
+    puts "USAGE MESSAGE"
   end
 end

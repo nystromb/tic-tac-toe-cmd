@@ -1,3 +1,6 @@
+require "./lib/Players.rb"
+require "./lib/GameModel.rb"
+require "./lib/GamePrompt.rb"
 require "./lib/TicTacToeGame.rb"
 
 if __FILE__ == $0
@@ -7,12 +10,12 @@ if __FILE__ == $0
   if (ARGV.length == 2)
     mode = ARGV[0].to_i
     fplyr = ARGV[1].to_i
-    ((fplyr == 1 || fplyr == 2) && (mode > 1 && mode < 3)) ? ready = true : (prompt.usage)
+    ((fplyr == 1 || fplyr == 2) && (mode >= 1 && mode <= 3)) ? ready = true : (prompt.usage)
   elsif (ARGV.length == 0) # prompt the user for input
     mode = prompt.for_game_mode
     fplyr = prompt.for_starting_player
     ready = true
   end
   
-  TicTacToeGame.new(GameModel.new(mode, fplyr)).start(prompt) if ready
+  TicTacToeGame.new(mode, fplyr) if ready
 end
