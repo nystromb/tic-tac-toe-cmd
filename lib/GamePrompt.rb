@@ -66,7 +66,7 @@ class Prompt
   end
   
   def computer_move
-    puts "Computer's turn..."
+    puts "Computer's thinking..."
   end
   
   def game_over_msg(winner = nil)
@@ -74,7 +74,7 @@ class Prompt
     if winner.nil?
       puts "Draw Game!"
     else
-      (winner.starts) ? (puts "#{winner} wins!\n\n") : (puts "#{winner} wins!\n\n")
+      print "#{winner} wins!\n\n"
     end
   end
   
