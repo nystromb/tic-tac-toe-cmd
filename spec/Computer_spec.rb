@@ -25,8 +25,7 @@ RSpec.describe Computer do
       
       computer = Computer.new
       computer.starts = true
-      c = computer.generate_move(model)
-      print c[5]
+      computer.generate_move(model)
     end
     it 'check for correct outcomes' do
       model = GameModel.new

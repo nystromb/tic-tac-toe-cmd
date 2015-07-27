@@ -30,7 +30,7 @@ class GameModel
   end
   
   def get_opponent
-    (@current_player == @p1) ? (return @p2) : (return @p1)
+    (@current_player == @p1) ? (return @p2.peice) : (return @p1.peice)
   end
   
   def change_turns
