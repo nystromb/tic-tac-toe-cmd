@@ -55,7 +55,9 @@ class Prompt
     puts "-----------------------------------------------------"
     puts "Game Mode: #{mode}\n\n"
     puts "-----------------------------------------------------\n\n"
-    (player.starts) ? (print "Player 1 (#{player.peice}) starts... \n") : (print "Player 2 (#{player.peice}) starts... \n")
+    (player.starts) ? number = 1 : number = 2
+    
+    print "#{player.name} #{number} starts... \n"
   end
   
   def user_move(player)
@@ -80,5 +82,10 @@ class Prompt
   
   def usage
     puts "USAGE MESSAGE"
+  end
+  
+  def chosen(player, move)
+    (player.starts) ? number = 1 : number = 2 
+    puts "#{player.name} #{number} chose #{move}"
   end
 end
