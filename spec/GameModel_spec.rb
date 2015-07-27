@@ -48,41 +48,19 @@ RSpec.describe GameModel do
       expect(model.get_empty_locs).to eq([2,3,4,6,7,8])
     end
   end
-  
-  describe '#next_win? :' do
-    it 'XXE' do
-      model = GameModel.new
-      combo = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
+  describe 'playing a game' do
+    it 'change turns when playing' do
+      gm = GameModel.new
+      p1 = Player.new
+      p2 = Computer.new
+      p1.peice = "X"
+      p1.starts = true
+      p2.peice = "O"
+      gm.set_players(p1, p2)
       
-      expect(model.next_win?(combo, 1, "X")).to eq(false)
-      
-      model.play(1, "X")
-      model.play(5, "X")
-      
-      expect(model.next_win?(combo ,9 , "X")).to eq(true)
-      
-      model.play(1, "O")
-      model.play(5, "O")
-      
-      expect(model.next_win?(combo ,9 , "O")).to eq(true)
-    end
-    it 'XEX' do
-      model = GameModel.new
-      combo = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
-      
-      model.play(1, "O")
-      model.play(3, "O")
-      
-      expect(model.next_win?(combo, 1, "O")).to eq(true)
-    end
-    it 'EXX' do
-      model = GameModel.new
-      combo = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
-      
-      model.play(8, "X")
-      modek.play(9, "X")
-      
-      expect(model.next_win?(combo, 7, "X")).to eq(true)
+      expect(gm.current_player).to eq(p1)
+      gm.play(1)
+      expect(gm.current_player).to eq(p2)
     end
   end
 end
