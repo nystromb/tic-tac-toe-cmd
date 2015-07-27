@@ -34,11 +34,12 @@ class TicTacToeGame
   end
   
   def start(prompt = Prompt.new)
-    prompt.intro(@game.current_player, @game.mode)
-
+    prompt.intro(@game.current_player, @mode)
+    @game.to_s
+    
     until @game.is_over?
       move = nil
-      @game.to_s
+      
       loop do
         if (@game.current_player.is_human?) 
           move = prompt.user_move(@game.current_player)
@@ -49,11 +50,15 @@ class TicTacToeGame
             move = [1,3,7,9][Random.rand(4)]
             break
           when 1
-            move = 5 if @game.board[5].nil?
+            if @game.board[5].nil?
+              move = 5 
+            else
+              move = [1,3,7,9][Random.rand(4)]
+            end
             break
           else
             @game.get_empty_locs.each do |m|
-              move = m if @game.next_win?(m, @game.get_opponent.peice)
+              move = m if @game.next_win?(m, @game.get_opponent)
               move = m if @game.next_win?(m, @game.current_player.peice)
             end
           end
@@ -61,10 +66,10 @@ class TicTacToeGame
         end 
         break if @game.move_is_valid(move.to_i)
       end
+      prompt.chosen(@game.current_player, move)
       @game.play(move.to_i)
+      @game.to_s
     end
-    #game is now over, print final board 
-    @game.to_s
     (@game.winner == nil) ? (prompt.game_over_msg) : (prompt.game_over_msg(@game.winner))
   end
 end
