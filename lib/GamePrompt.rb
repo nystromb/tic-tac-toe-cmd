@@ -81,7 +81,9 @@ class Prompt
   end
   
   def usage
-    puts "USAGE MESSAGE"
+    puts "USAGE: tictactoe.rb [game mode] [starting player]"
+    puts "Game Mode: \n 1 = Single Player \n 2 = Two Player \n 3 = Autonomous Mode"
+    puts "Starting Player: 1 or 2"
   end
   
   def chosen(player, move)
