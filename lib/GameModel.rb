@@ -13,18 +13,28 @@ class GameModel
     @winner
   end
   
+  def set_players(player1, player2)
+    @p1, @p2 = player1, player2
+    (@p1.starts) ? @current_player = @p1 : @current_player = @p2
+  end
+  
   #method returns true or false if game is over
   def is_over?
     return true if (winning_move?) || (spots_filled == 9)
     return false
   end
   
-  def play(move, peice)
+  def play(move, peice = @current_player.peice)
     @board[move] = peice
+    change_turns
   end
   
-  def get_opponent(player)
-    (player.starts) ? (return @p2) : (return @p1)
+  def get_opponent
+    (@current_player == @p1) ? (return @p2) : (return @p1)
+  end
+  
+  def change_turns
+    (@current_player == @p1) ? @current_player = @p2 : @current_player = @p1
   end
   
   #returns all the empty locations on the board.
@@ -69,16 +79,17 @@ class GameModel
   end
   
   #returns true if the given location is a winning next move
-  def next_win?(combo, location, piece)
-    combo.each do |i|
+  def next_win?(location, piece)
+    winning_moves = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
+    winning_moves.each do |i|
       #if index is in combo array
       if (location == i[0]) || (location == i[1]) || (location == i[2])
         #check for 1 empty and 2 filled with the peice (ex XXE, XEX, EXX)
-        if ((@spots[i[0]] == piece) && (@spots[i[1]] == piece) && (@spots[i[2]].nil?))
+        if ((@board[i[0]] == piece) && (@board[i[1]] == piece) && (@board[i[2]].nil?))
           return true
-        elsif ((@spots[i[0]] == piece) && (@spots[i[1]].nil?) && (@spots[i[2]] == piece))
+        elsif ((@board[i[0]] == piece) && (@board[i[1]].nil?) && (@board[i[2]] == piece))
           return true
-        elsif ((@spots[i[0]].nil?) && (@spots[i[1]] == piece) && (@spots[i[2]] == piece))
+        elsif ((@board[i[0]].nil?) && (@board[i[1]] == piece) && (@board[i[2]] == piece))
           return true
         end
       end
