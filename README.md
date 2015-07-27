@@ -34,6 +34,6 @@ Game Modes:
 * 2 = Two Player (Human vs. Human)
 * 3 = Autonomous Mode (Computer vs. Computer)
 
-Starting player could be either 1 or 2 for player1 and player2 respectively.
+Starting player could be either 1 or 2 for player 1 and player 2 respectively.
 
 ------
