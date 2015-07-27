@@ -14,14 +14,25 @@ Once you choose these settings when the program starts, the game will then begin
 
 There are also helpful instructions along the way just in case you get lost.
 
-------
+## Usage
 
 To start playing, just run the tictactoe.rb file as such:
 
--> ruby tictactoe.rb
+-> `ruby tictactoe.rb`
 
 Once the program runs, it will ask the user for the necessary input. After that is complete, the game will start.
 
 ------
 
-The computer AI could be improved. I am still trying to come up with a more robust solution.
+You can also run the game options from the command line!
+
+-> `ruby tictactoe.rb [game mode] [starting player]
+
+Game mode options: 
+* 1 for Single Player mode
+* 2 for 2 Player mode
+* 3 for Autonomous mode
+
+The starting player could be either 1 or 2
+
+------
