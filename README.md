@@ -30,9 +30,9 @@ You can also start the game using command line arguments
 -> `ruby tictactoe.rb [game mode] [starting player]`
 
 Game Modes:
-1 = Single Player (You vs. Computer)
-2 = Two Player (Human vs. Human)
-3 = Autonomous Mode (Computer vs. Computer)
+* 1 = Single Player (You vs. Computer)
+* 2 = Two Player (Human vs. Human)
+* 3 = Autonomous Mode (Computer vs. Computer)
 
 Starting player could be either 1 or 2 for player1 and player2 respectively.
 
