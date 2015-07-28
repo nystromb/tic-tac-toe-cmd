@@ -45,24 +45,13 @@ class TicTacToeGame
           move = prompt.user_move(@game.current_player)
         else
           prompt.computer_move
-          case @game.spots_filled
-          when 0
-            move = [1,3,7,9][Random.rand(4)]
-            break
-          when 1
-            if @game.board[5].nil?
-              move = 5 
-            else
-              move = [1,3,7,9][Random.rand(4)]
-            end
-            break
-          else
-            @game.get_empty_locs.each do |m|
-              move = m if @game.next_win?(m, @game.get_opponent)
-              move = m if @game.next_win?(m, @game.current_player.peice)
-            end
+          move = @game.current_player.generate_move(@game.clone)
+          
+          @game.get_empty_locs.each do |m|
+            move = m if @game.next_win?(m, @game.get_opponent)
+            move = m if @game.next_win?(m, @game.current_player.peice)
           end
-          move = @game.current_player.generate_move(@game.clone) if move.nil?
+          
         end 
         break if @game.move_is_valid(move.to_i)
       end
