@@ -1,10 +1,11 @@
-require "gamemodel"
+require "GameBoard"
 require "gameprompt"
-require "players"
+require "player"
+require 'computer'
 
-RSpec.describe GameModel do
+RSpec.describe GameBoard do
   describe '# move_is_valid: ' do
-    model = GameModel.new
+    model = GameBoard.new
     it 'should only accept a move that is 1..9' do
       #1..9 should be true
       9.times { |i| expect(model.move_is_valid(i+1)).to eq(true)}
@@ -18,17 +19,17 @@ RSpec.describe GameModel do
   end
   describe '# winning_move?:' do
     it 'should have no winning move upon initialization' do
-      expect(GameModel.new.winning_move?).to eq(false)
+      expect(GameBoard.new.winning_move?).to eq(false)
     end
     it 'should detect if there is a winning OOO move' do
-      model = GameModel.new
+      model = GameBoard.new
       model.play(2, "O")
       model.play(5, "O")
       model.play(8, "O")
       expect(model.winning_move?).to eq(true)
     end
     it 'should detect a winning XXX move' do
-      model = GameModel.new
+      model = GameBoard.new
       model.play(1, "X")
       model.play(5, "X")
       model.play(9, "X")
@@ -37,7 +38,7 @@ RSpec.describe GameModel do
   end
   describe 'empty locs' do
     it 'test empty locations' do
-      model = GameModel.new
+      model = GameBoard.new
       
       expect(model.get_empty_locs).to eq([1,2,3,4,5,6,7,8,9])
       
@@ -50,7 +51,7 @@ RSpec.describe GameModel do
   end
   describe 'playing a game' do
     it 'change turns when playing' do
-      gm = GameModel.new
+      gm = GameBoard.new
       p1 = Player.new
       p2 = Computer.new
       p1.peice = "X"

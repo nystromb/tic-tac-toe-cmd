@@ -1,11 +1,12 @@
-require 'players'
+require 'player'
+require 'computer'
+require 'gameboard'
 require 'gamemodel'
-require 'tictactoegame'
 
 RSpec.describe Computer do
   describe 'generate move' do
     it 'X at 2, 6, 9 : O at 8, 9' do
-      model = GameModel.new
+      model = GameBoard.new
       
       p1 = Player.new
       p2 = Computer.new
@@ -29,7 +30,7 @@ RSpec.describe Computer do
       expect(move).to eq(3)
     end
     it 'X at 1, 6, 9 : O at 8, 9' do
-      model = GameModel.new
+      model = GameBoard.new
       
       p1 = Player.new
       p2 = Computer.new
@@ -53,7 +54,7 @@ RSpec.describe Computer do
       expect(move).to eq(5)
     end
     it 'other player 1 til win at 1 and 5' do
-      model = GameModel.new
+      model = GameBoard.new
       
       p1 = Player.new
       p2 = Computer.new
@@ -74,8 +75,8 @@ RSpec.describe Computer do
       
       expect(move).to eq(9)
     end
-    it 'Second move in middle at 5 if goes in corner' do
-      model = GameModel.new
+    it 'Second move in center if other plays in corner' do
+      model = GameBoard.new
       
       p1 = Player.new
       p2 = Computer.new
@@ -93,8 +94,8 @@ RSpec.describe Computer do
       move = computer.generate_move(model)
       expect(move).to eq(5)
     end
-    it 'Second move in middle at 5 if goes in corner' do
-      model = GameModel.new
+    it 'Second move in middle if other player goes in corner' do
+      model = GameBoard.new
       
       p1 = Player.new
       p2 = Computer.new
@@ -112,8 +113,8 @@ RSpec.describe Computer do
       move = computer.generate_move(model)
       expect(move).to eq(5)
     end
-    it 'first move is in middle, computer goes in corner' do
-      model = GameModel.new
+    it 'first move is in middle, then computer goes in corner' do
+      model = GameBoard.new
       
       p1 = Player.new
       p2 = Computer.new
@@ -131,7 +132,7 @@ RSpec.describe Computer do
       expect(move).to eq(1)
     end
     it 'check corner move on blank board' do
-      model = GameModel.new
+      model = GameBoard.new
       
       p1 = Computer.new
       p2 = Player.new
@@ -149,7 +150,7 @@ RSpec.describe Computer do
       expect(move).to eq(1)
     end
     it 'bug found when playing this board could have lost' do
-      model = GameModel.new
+      model = GameBoard.new
       
       p1 = Player.new
       p2 = Computer.new
