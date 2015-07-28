@@ -26,18 +26,6 @@ Once the program runs, it will ask the user for the necessary input. After that 
 
 ------
 
-You can also run the game options from the command line!
-
--> `ruby tictactoe.rb [game mode] [starting player]
-
-Game mode options: 
-* 1 for Single Player mode
-* 2 for 2 Player mode
-* 3 for Autonomous mode
-
-The starting player could be either 1 or 2
-
-------
 You can also start the game using command line arguments
 
 -> `ruby tictactoe.rb [game mode] [starting player]`
