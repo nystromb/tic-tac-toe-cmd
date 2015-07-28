@@ -46,12 +46,6 @@ class TicTacToeGame
         else
           prompt.computer_move
           move = @game.current_player.generate_move(@game.clone)
-          
-          @game.get_empty_locs.each do |m|
-            move = m if @game.next_win?(m, @game.get_opponent)
-            move = m if @game.next_win?(m, @game.current_player.peice)
-          end
-          
         end 
         break if @game.move_is_valid(move.to_i)
       end
