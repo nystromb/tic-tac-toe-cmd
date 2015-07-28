@@ -53,7 +53,7 @@ class Computer < Player
       end
     end
     
-    print "OUTCOMES #{outcomes}, CHOICE: #{move}\n" if depth == 0
+    #print "OUTCOMES #{outcomes}, CHOICE: #{move}\n" if depth == 0
     return move if depth == 0
     return best
     
