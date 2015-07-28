@@ -1,19 +1,4 @@
-class Player
-  attr_accessor :name, :starts, :peice
-  
-  def initialize (name = "Player")
-    @starts = false
-    @name = name
-  end
-  
-  #player by default is human
-  def is_human?
-    return true
-  end
-end
-
 class Computer < Player
-  attr_accessor :choice
   def initialize(name = "Computer")
     @name = name
     @starts = false
@@ -37,26 +22,14 @@ class Computer < Player
     move = nil
     if(node.current_player.peice == "X")
       best = 100
-      outcomes.each do |m, score|
-        if (score.is_a? Integer) && (score < best)
-          move = m
-          best = score
-        end
-      end
+      outcomes.each { |m, score| best, move = score, m if (score < best) }
     else
       best = -100
-      outcomes.each do |m, score|
-        if (score.is_a? Integer) && (score > best)
-          move = m
-          best = score
-        end
-      end
+      outcomes.each { |m, score| best, move = score, m if (score > best) }
     end
     
     #print "OUTCOMES #{outcomes}, CHOICE: #{move}\n" if depth == 0
-    return move if depth == 0
-    return best
-    
+    (depth == 0) ? (return move) : (return best)    
   end
   
   def score(game, depth)
