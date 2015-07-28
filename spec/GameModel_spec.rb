@@ -35,7 +35,7 @@ RSpec.describe GameModel do
       expect(model.winning_move?).to eq(true)
     end
   end
-  describe '#empty locs' do
+  describe 'empty locs' do
     it 'test empty locations' do
       model = GameModel.new
       
@@ -61,27 +61,6 @@ RSpec.describe GameModel do
       expect(gm.current_player).to eq(p1)
       gm.play(1)
       expect(gm.current_player).to eq(p2)
-    end
-  end
-  describe 'next win' do
-    it 'opponent next win detect' do
-      gm = GameModel.new
-      p1 = Player.new
-      p2 = Computer.new
-      p1.peice = "X"
-      p1.starts = true
-      p2.peice = "O"
-      gm.set_players(p1, p2)
-      
-      gm.play(1) #X
-      gm.play(3) #O
-      gm.play(5) #X
-      gm.play(6) #O
-      
-      expect(gm.next_win?(9, gm.get_opponent)).to eq(true)
-      expect(gm.next_win?(9, gm.current_player.peice)).to eq(true)
-      
-      gm
     end
   end
 end

@@ -29,10 +29,6 @@ class GameModel
     change_turns
   end
   
-  def get_opponent
-    (@current_player == @p1) ? (return @p2.peice) : (return @p1.peice)
-  end
-  
   def change_turns
     (@current_player == @p1) ? @current_player = @p2 : @current_player = @p1
   end
@@ -73,25 +69,6 @@ class GameModel
       elsif (@board[set[0]] == "O") && (@board[set[1]] == "O") && (@board[set[2]] == "O")
         @winner = "O"
         return true
-      end
-    end
-    return false
-  end
-  
-  #returns true if the given location is a winning next move
-  def next_win?(location, piece)
-    winning_moves = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
-    winning_moves.each do |i|
-      #if index is in combo array
-      if (location == i[0]) || (location == i[1]) || (location == i[2])
-        #check for 1 empty and 2 filled with the peice (ex XXE, XEX, EXX)
-        if ((@board[i[0]] == piece) && (@board[i[1]] == piece) && (@board[i[2]].nil?))
-          return true
-        elsif ((@board[i[0]] == piece) && (@board[i[1]].nil?) && (@board[i[2]] == piece))
-          return true
-        elsif ((@board[i[0]].nil?) && (@board[i[1]] == piece) && (@board[i[2]] == piece))
-          return true
-        end
       end
     end
     return false
