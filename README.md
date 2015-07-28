@@ -15,10 +15,8 @@ Once you choose these settings when the program starts, the game will then begin
 There are also helpful instructions along the way just in case you get lost.
 
 ## Usage
-<<<<<<< HEAD
-=======
+
 ------
->>>>>>> origin/master
 
 To start playing, just run the tictactoe.rb file as such:
 
@@ -28,7 +26,6 @@ Once the program runs, it will ask the user for the necessary input. After that 
 
 ------
 
-<<<<<<< HEAD
 You can also run the game options from the command line!
 
 -> `ruby tictactoe.rb [game mode] [starting player]
@@ -41,7 +38,6 @@ Game mode options:
 The starting player could be either 1 or 2
 
 ------
-=======
 You can also start the game using command line arguments
 
 -> `ruby tictactoe.rb [game mode] [starting player]`
@@ -54,4 +50,4 @@ Game Modes:
 Starting player could be either 1 or 2 for player 1 and player 2 respectively.
 
 ------
->>>>>>> origin/master
+
