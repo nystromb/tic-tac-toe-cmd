@@ -30,35 +30,33 @@ class Computer < Player
     moves.each do |move|
       node.play(move)
       new_node = node.clone
-      outcomes[move] = generate_move(new_node, outcomes, depth + 1)
+      outcomes[move] = generate_move(new_node, {}, depth + 1)
       node.play(move, nil)
     end
     
-    
-    if depth == 0
-      move = nil
-      if(node.current_player.peice == "X")
-        best = -100
-        outcomes.each do |m, score|
-          if (score.is_a? Integer) && (score > best)
-            move = m
-            best = score
-          end
-        end
-      else
-        best = 100
-        outcomes.each do |m, score|
-          if (score.is_a? Integer) && (score < best)
-            move = m
-            best = score
-          end
+    move = nil
+    if(node.current_player.peice == "X")
+      best = 100
+      outcomes.each do |m, score|
+        if (score.is_a? Integer) && (score < best)
+          move = m
+          best = score
         end
       end
-      return move
     else
-      #print "OUTCOMES #{outcomes}\n"
-      return outcomes
+      best = -100
+      outcomes.each do |m, score|
+        if (score.is_a? Integer) && (score > best)
+          move = m
+          best = score
+        end
+      end
     end
+    
+    print "OUTCOMES #{outcomes}, CHOICE: #{move}\n" if depth == 0
+    return move if depth == 0
+    return best
+    
   end
   
   def score(game, depth)
