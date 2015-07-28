@@ -39,3 +39,4 @@ Starting player could be either 1 or 2 for player 1 and player 2 respectively.
 
 ------
 
+Good Luck! I think you might need it :)
