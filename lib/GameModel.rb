@@ -1,6 +1,6 @@
-class TicTacToeGame
+class GameModel
   
-  def initialize(mode = 2, sp = 1, game = GameModel.new)
+  def initialize(mode, sp, game = GameBoard.new)
     @game = game
       
     case mode
