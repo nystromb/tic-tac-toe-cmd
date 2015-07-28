@@ -90,4 +90,15 @@ class Prompt
     (player.starts) ? number = 1 : number = 2 
     puts "#{player.name} #{number} chose #{move}"
   end
+  
+  def retry?
+    puts "Do you want to try again? y/n"
+    ans = STDIN.gets.chomp
+    case ans.downcase
+    when "y", "yes"
+      return true
+    else
+      return false
+    end
+  end
 end
