@@ -2,6 +2,16 @@ class Prompt
   def initialize
   end
   
+  #method prints out the current game board
+  def to_s(board)
+    print "\n"
+    board.each do |index, value|
+      (value.nil?) ? (print " #{index} ") : (print " #{value} ")
+      print "\n" if (index % 3) == 0 
+    end
+    print "\n"
+  end
+  
   #prompts user for their desired game mode
   def for_game_mode
     #Helpful instructions for first time user:

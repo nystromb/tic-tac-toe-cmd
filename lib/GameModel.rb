@@ -35,7 +35,7 @@ class GameModel
   
   def start(prompt = Prompt.new)
     prompt.intro(@game.current_player, @mode)
-    @game.to_s
+    prompt.to_s(@game.board)
     
     until @game.is_over?
       move = nil
@@ -51,7 +51,7 @@ class GameModel
       end
       prompt.chosen(@game.current_player, move)
       @game.play(move.to_i)
-      @game.to_s
+      prompt.to_s(@game.board)
     end
     (@game.winner == nil) ? (prompt.game_over_msg) : (prompt.game_over_msg(@game.winner))
   end

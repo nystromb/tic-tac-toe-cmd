@@ -1,5 +1,5 @@
 class GameBoard
-  attr_accessor :current_player
+  attr_accessor :current_player, :board
   attr_reader :winner
 
   def initialize
@@ -16,7 +16,6 @@ class GameBoard
   #method returns true or false if game is over
   def is_over?
     ((winning_move?) || (spots_filled == 9)) ? (return true) : (return false)
-    
   end
   
   #places the game peice on the given location
@@ -38,22 +37,11 @@ class GameBoard
     return false 
   end
   
-  #method prints out the current game board
-  def to_s
-    print "\n"
-    @board.each do |index, value|
-      (value.nil?) ? (print " #{index} ") : (print " #{value} ")
-      print "\n" if (index % 3) == 0 
-    end
-    print "\n"
-  end
-  
   #cycles the current player's turn
   def change_turns
     (@current_player == @p1) ? @current_player = @p2 : @current_player = @p1
   end
   
-
   #checks game board for a winning combination exists
   def winning_move?
     winning_moves = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
