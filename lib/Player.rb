@@ -1,13 +1,9 @@
 class Player
-  attr_accessor :name, :starts, :peice
+  attr_accessor :name, :starts, :peice, :human
   
   def initialize (name = "Player")
     @starts = false
+    @human = true
     @name = name
-  end
-  
-  #player by default is human
-  def is_human?
-    return true
   end
 end
