@@ -45,6 +45,7 @@ class GameBoard
     return false
   end
   
+  #returns the total number of spots that have been played
   def spots_filled
     count = 0
     @board.each { |index, spot| (spot.nil?) ? next : count += 1 }

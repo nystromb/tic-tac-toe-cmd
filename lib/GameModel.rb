@@ -5,35 +5,8 @@ class GameModel
     @game = GameBoard.new
     init_players(game_mode, starting_player)
   end
-  
-  def init_players(game_mode, starting_player)
-    @p1 = Player.new
-    @p2 = Player.new
-    
-    if game_mode == 1
-      @mode = "Human v. Computer"
-      @p2.human = false
-    elsif game_mode == 2
-      @mode = "Human v. Human"
-    elsif game_mode == 3 
-      @mode = "Computer v. Computer"
-      @p1.human = false
-      @p2.human = false
-    end
-    
-    if (starting_player == 1)
-      @p1.starts = true
-      @p1.peice = "X"
-      @p2.peice = "O"
-    else
-      @p2.starts = true
-      @p2.peice = "X"
-      @p1.peice = "O"
-    end
-    
-    (@p1.starts) ? @game.current_player = @p1 : @game.current_player = @p2
-  end
-  
+
+  #game loop function
   def start(prompt)
     prompt.intro(@game.current_player, @mode)
     prompt.to_s(@game.board)
@@ -61,10 +34,11 @@ class GameModel
     (game.current_player == @p1) ? (game.current_player = @p2) : (game.current_player = @p1)
   end
 
+  #returns the best move available (minimax function)
   def generate_move(node, outcomes = {}, depth = 0)
     return score(node, depth) if node.is_over?
-    moves = node.get_empty_locs
-    moves.each do |move|
+    
+    node.get_empty_locs.each do |move|
       node.play(move, node.current_player.peice)
       set_opponent(node)
       new_node = node.clone
@@ -82,10 +56,10 @@ class GameModel
     end
     
     # print "#{outcomes} #{node}" if depth == 0
-    
     (depth == 0) ? (return move) : (return best)    
   end
   
+  #returns the score of the game based on the depth of the tree 
   def score(game, depth)
     if game.winner == "X"
       return depth - 10
@@ -95,6 +69,33 @@ class GameModel
       return 0
     end
   end
-
-
+  
+  #sets the players of the game
+  def init_players(game_mode, starting_player)
+    @p1 = Player.new
+    @p2 = Player.new
+    
+    if game_mode == 1
+      @mode = "Human v. Computer"
+      @p2.human = false
+    elsif game_mode == 2
+      @mode = "Human v. Human"
+    elsif game_mode == 3 
+      @mode = "Computer v. Computer"
+      @p1.human = false
+      @p2.human = false
+    end
+    
+    if (starting_player == 1)
+      @p1.starts = true
+      @p1.peice = "X"
+      @p2.peice = "O"
+    else
+      @p2.starts = true
+      @p2.peice = "X"
+      @p1.peice = "O"
+    end
+    
+    (@p1.starts) ? @game.current_player = @p1 : @game.current_player = @p2
+  end
 end
